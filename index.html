@@ -16,15 +16,17 @@ function onSub() {
 </script>
 <link rel="stylesheet" type="text/css" href="tree-viewer.css">
 <!-- General stylesheet -->
-<link rel="stylesheet" media="all" href="http://christos-c.com/style.css" />
-<link rel="stylesheet" media="only screen and (max-width: 800px)" href="http://christos-c.com/mobile.style.css" />
+<link rel="stylesheet" media="all" href="../style.css" />
+<link rel="stylesheet" media="only screen and (max-width: 800px)" href="../mobile.style.css" />
 <body>
-<div class="wrapper" style="text-align: center;">
+<div class="wrapper">
+	<a href="../resources.html">[back]</a>
 	<div id="info">
 		<h3>Syntactic Tree Viewer</h3>
 		This is a <a href="http://d3js.org/">d3.js</a>-based tree viewer that allows you to expand and collapse tree nodes and pan/zoom to different areas of the tree. 
 		Input the bracketed tree that you want to view in the box above and press "View Tree".
 	</div>
+	<div style="text-align: center;">
     <div id="tree-container"></div>
 	<div id="input-text">
 		<textarea id="text" rows="5">(S (NP-SBJ (NP (NNP Pierre) (NNP Vinken) ) (, ,) (ADJP (NP (CD 61) (NNS years) ) (JJ old) ) (, ,) ) (VP (MD will) (VP (VB join) (NP
@@ -32,6 +34,7 @@ function onSub() {
 	</div>
 	<div id="input-submit">
 			<input type="submit" id="submit-button" value="View Tree" onclick="return onSub();" />
+	</div>
 	</div>
 	<!-- Fork me on GitHub button -->
 	<a href="https://github.com/christos-c/tree-viewer">
