@@ -1,0 +1,42 @@
+<html>
+<meta charset="utf-8">
+<title>Syntactic Tree Viewer</title>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="parser.js"></script>
+<script src="d3Tree.js"></script>
+<script type="text/javascript">
+function onSub() {
+	var data = document.getElementById("text").value;
+	// Parse the string into JSON (defined in parser.js)
+	var jsonData = parse(data);
+	d3Tree(jsonData);
+	return false;
+}
+</script>
+<link rel="stylesheet" type="text/css" href="tree-viewer.css">
+<!-- General stylesheet -->
+<link rel="stylesheet" media="all" href="http://christos-c.com/style.css" />
+<link rel="stylesheet" media="only screen and (max-width: 800px)" href="http://christos-c.com/mobile.style.css" />
+<body>
+<div class="wrapper" style="text-align: center;">
+	<div id="info">
+		<h3>Syntactic Tree Viewer</h3>
+		This is a <a href="http://d3js.org/">d3.js</a>-based tree viewer that allows you to expand and collapse tree nodes and pan/zoom to different areas of the tree. 
+		Input the bracketed tree that you want to view in the box above and press "View Tree".
+	</div>
+    <div id="tree-container"></div>
+	<div id="input-text">
+		<textarea id="text" rows="5">(S (NP-SBJ (NP (NNP Pierre) (NNP Vinken) ) (, ,) (ADJP (NP (CD 61) (NNS years) ) (JJ old) ) (, ,) ) (VP (MD will) (VP (VB join) (NP
+(DT the) (NN board) ) (PP-CLR (IN as) (NP (DT a) (JJ nonexecutive) (NN director) )) (NP-TMP (NNP Nov.) (CD 29) ))) (. .) )</textarea>
+	</div>
+	<div id="input-submit">
+			<input type="submit" id="submit-button" value="View Tree" onclick="return onSub();" />
+	</div>
+	<!-- Fork me on GitHub button -->
+	<a href="https://github.com/christos-c/tree-viewer">
+		<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png">
+	</a>
+</div>
+</body>
+</html>
