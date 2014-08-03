@@ -13,11 +13,26 @@ function parse(textData) {
 	currentNode = null;
 	root = null;
 	
+	data = textData;
+	
+	// If this is a CCG tree keep only the categories and words
+	if (data.match(/<T (.*?) [0-9]+ [0-9]+>/)) {
+		// Replace any category-internal ()'s with [] to avoid confusing the parser
+		// will be changed back later in TreeNode.toJSON()
+		data = data.replace(/<T (.*?) [0-9]+ [0-9]+>/g, function(a, b){
+		    return b.replace(/\[/g,"{").replace(/\]/g,"}").replace(/\(/g,"[").replace(/\)/g,"]");
+		});
+		data = data.replace(/<L (.*?) (.*?) (.*?) (.*?) (.*?)>/g, function(a, b, c, d, e){
+		    return b.replace(/\[/g,"{").replace(/\]/g,"}").replace(/\(/g,"[").replace(/\)/g,"]") + ' ' + e;
+		});
+	}
+	
 	// Clean up
-	data = textData.replace(/\s+/g, " ");
-	data = data.replace(/\) \(/g, ")(");
-	data = data.replace(/\( \(/g, "((");
-	data = data.replace(/\) \)/g, "))");
+	data = data.replace(/\s+/g, " ");
+	data = data.replace(/\)\s+\(/g, ")(");
+	data = data.replace(/\(\s+\(/g, "((");
+	// Not sure why I have to do this twice... apparently 
+	data = data.replace(/\)\s+\)/g, "))").replace(/\)\s+\)/g, "))");
 	
 	// Parse the string
 	makeTree();
@@ -31,10 +46,9 @@ function makeTree() {
 	// console.log("First token: " + token);
 	var parts = [2];
 	
-    while( token != "" && token != ")" && token != "]" ) {
+    while( token != "" && token != ")" ) {
         switch(token.charAt(0)) {
 		case "(":
-        case "[":
             token = token.substr(1, token.length - 1);
             var spaceAt = token.indexOf(" ");
 			var childNode;
@@ -66,7 +80,7 @@ function makeTree() {
         }
         token = getNextToken().trim();
     }
-	if (token == ")" || token == "]") {
+	if (token == ")") {
 		if (currentNode.getParent()) {
 			currentNode = currentNode.getParent();
 			// console.log("Back to: " + currentNode.toJSON());
@@ -85,14 +99,12 @@ function getNextToken() {
         var ch = data.charAt(pos + i);
 
         switch(ch) {
-        case "[":
 		case "(":
             if( i > 0 ) gotToken = true;
             else token += ch;
             break;
 
 		case ")":
-        case "]":
             if( i == 0 ) token += ch;
             gotToken = true;
             break;
@@ -129,6 +141,7 @@ function TreeNode(label) {
 	}
 	
 	this.toJSON = function() {
+		label = label.replace(/\[/g,"(").replace(/\]/g,")").replace(/{/g,"[").replace(/}/g,"]");
 		var text = "{\"name\":" + "\"" + label + "\"";
 		if (this.children.length != 0) {
 			text += ",\"children\":[";

@@ -194,7 +194,8 @@ function d3Tree(treeData) {
 
 		nodeEnter.append("rect")
 			.attr('class', 'nodeRect')
-			.attr("x", function(d){return -(d.name.length*10)/2})
+			// Size of the rectangle/2
+			.attr("x", function(d){return -(d.name.length*5+10)/2})
 			.attr("y", -10)
 			.attr("width", 0)
 			.attr("height", 0)
@@ -223,7 +224,7 @@ function d3Tree(treeData) {
         node.select("rect.nodeRect")
             .attr("width", function(d) {
 				// Adjust the size of the square according to the label
-                return d.children || d._children ? d.name.length*10 : 0;
+                return d.children || d._children ? d.name.length*5+10 : 0;
             })
             .attr("height", function(d) {
                 return d.children || d._children ? 20 : 0;
