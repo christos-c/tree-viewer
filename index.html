@@ -23,6 +23,7 @@ function onSub() {
 
 function loadTextArea(type) {
 	var textArea = document.getElementById("text");
+		textArea.style.color = "black";
 	if (type == "PTB") textArea.value = defaultPTBText;
 	else if (type == "CCG") textArea.value = defaultCCGText;
 }
@@ -30,11 +31,16 @@ function loadTextArea(type) {
 window.onload = function() {
 	var textArea = document.getElementById("text");
 	textArea.onfocus = function() {
-		if (textArea.value == defaultPTBText || textArea.value == defaultCCGText) {
+		textArea.style.color = "black";
+		if (textArea.value == "Enter your tree here...")
 			textArea.value = "";
-			textArea.style.color = "black";
-		}
 	};
+	textArea.onblur = function() {
+		if (textArea.value == "") {
+			textArea.style.color = "grey";
+			textArea.value = "Enter your tree here...";
+		}
+	}
 }
 </script>
 <link rel="stylesheet" type="text/css" href="tree-viewer.css">
@@ -47,13 +53,13 @@ window.onload = function() {
 	<div id="info">
 		<h3>Syntactic Tree Viewer</h3>
 		This is a <a href="http://d3js.org/">d3.js</a>-based tree viewer that allows you to expand and collapse tree nodes and pan/zoom to different areas of the tree. 
-		Input the bracketed tree that you want to view in the box above and press "View Tree". The viewer has been designed to work with <a href="#" onclick="loadTextArea('PTB');">Penn Treebank (.mrg)</a> and <a href="#" onclick="loadTextArea('CCG');">CCGbank (.auto)</a> style trees. (Click on the links to try an example)
+		Input the bracketed tree that you want to view in the box above and press "View Tree". The viewer has been designed to work with <a href="#" onclick="loadTextArea('PTB');">Penn Treebank (.mrg)</a> and <a href="#" onclick="loadTextArea('CCG');">CCGbank (.auto)</a> style trees. <br/>(Click on the links to try an example)
 	</div>
 	<div style="text-align: center;">
     <div id="tree-container"></div>
 	<div id="input-text">
 		<!--Initialise the default text with grey -->
-		<textarea id="text" rows="5" style="color: grey;"></textarea>
+		<textarea id="text" rows="5" style="color: grey;" onclick="this.select();">Enter your tree here...</textarea>
 	</div>
 	<div id="input-submit">
 			<input type="submit" id="submit-button" value="View Tree" onclick="return onSub();" />
