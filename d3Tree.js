@@ -2,11 +2,8 @@
 // https://gist.github.com/robschmuecker/7880033
 
 function d3Tree(treeData) {
-    // Calculate total nodes, max label length
-    var totalNodes = 0;
     // panning variables
     var panSpeed = 200;
-    var panBoundary = 20; // Within 20px from edges will pan when dragging.
     // Misc. variables
     var i = 0;
     var duration = 450;
@@ -28,9 +25,9 @@ function d3Tree(treeData) {
 		
 	// Can be used to draw the links between nodes instead of the diagonal
 	// TODO Doesn't work with the collapse/expand transition
-	function straightLine(d) {
-		return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y;
-	}
+	//function straightLine(d) {
+	//	return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y;
+	//}
 
     // A recursive helper function for performing some setup by walking through all nodes
     function visit(parent, visitFn, childrenFn) {

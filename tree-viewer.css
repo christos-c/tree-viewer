@@ -14,7 +14,7 @@
    
 .node text {
 	font-size: 10px;
-	font-family: sans-serif;
+	font-family: serif;
 }
    
 .link {
@@ -39,4 +39,10 @@
 
 #info {
 	margin-bottom: 20px;
+}
+
+#sentence-container {
+	width: 1020.8px;
+	margin-left: auto;
+	margin-right: auto;
 }
