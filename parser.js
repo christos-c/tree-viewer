@@ -16,13 +16,13 @@ function parse(textData) {
 	data = textData;
 	
 	// If this is a CCG tree keep only the categories and words
-	if (data.match(/<T (.*?) [0-9]+ [0-9]+>/)) {
+	if (data.match(/<T\s+(.*?)\s+[0-9]+\s+[0-9]+>/)) {
 		// Replace any category-internal ()'s with [] to avoid confusing the parser
 		// will be changed back later in TreeNode.toJSON()
-		data = data.replace(/<T (.*?) [0-9]+ [0-9]+>/g, function(a, b){
+		data = data.replace(/<T\s+(.*?)\s+[0-9]+\s+[0-9]+>/g, function(a, b){
 		    return b.replace(/\[/g,"{").replace(/\]/g,"}").replace(/\(/g,"[").replace(/\)/g,"]");
 		});
-		data = data.replace(/<L (.*?) (.*?) (.*?) (.*?) (.*?)>/g, function(a, b, c, d, e){
+		data = data.replace(/<L\s+(.*?)\s+(.*?)\s+(.*?)\s+(.*?)\s+(.*?)>/g, function(a, b, c, d, e){
 		    return b.replace(/\[/g,"{").replace(/\]/g,"}").replace(/\(/g,"[").replace(/\)/g,"]") + ' ' + e;
 		});
 	}
